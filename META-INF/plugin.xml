@@ -1,0 +1,25 @@
+<idea-plugin version="2">
+    <application-components>
+        <component>
+            <implementation-class>org.gark87.intellij.lang.ini.IniSupportLoader</implementation-class>
+        </component>
+    </application-components>
+    <name>INIPlugin</name>
+    <description>Simple support for *.ini files</description>
+    <version>1.0</version>
+    <vendor>gark87</vendor>
+    <idea-version since-build="95.429"/>
+    <project-components>
+        <!-- Add your project components here -->
+    </project-components>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <lang.parserDefinition language="INI"
+                               implementationClass="org.gark87.intellij.lang.ini.parsing.IniParserDefinition"/>
+    </extensions>
+
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
