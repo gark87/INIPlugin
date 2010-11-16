@@ -19,6 +19,7 @@ package org.gark87.intellij.lang.ini.parsing;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
+import org.gark87.intellij.lang.ini.IniBundle;
 
 /**
  * @author gark87 <arkady.galyash@gmail.com>
@@ -35,7 +36,7 @@ public class Parsing {
             return sectionMarker;
         } else {
             builder.advanceLexer();
-            builder.error("TODO! Here should be correct error msg");
+            builder.error(IniBundle.message("parsing.ini.unexpected.start"));
         }
         return sectionMarker;
     }
@@ -69,15 +70,12 @@ public class Parsing {
             }
             prop.done(IniElementTypes.PROPERTY);
             lookupEOL(builder);
-        } else {
-            builder.advanceLexer();
-            builder.error("TODO! Here should be correct error msg");
         }
     }
 
     private static void lookupEOL(PsiBuilder builder) {
         while (!builder.eof() && builder.getTokenType() != IniTokenTypes.EOL) {
-            builder.error("TODO! Here should be correct error msg");
+            builder.error(IniBundle.message("parsing.ini.non.eol"));
             builder.advanceLexer();
         }
         skipEOLs(builder);

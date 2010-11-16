@@ -16,10 +16,11 @@
     <extensions defaultExtensionNs="com.intellij">
         <lang.parserDefinition language="INI"
                                implementationClass="org.gark87.intellij.lang.ini.parsing.IniParserDefinition"/>
+        <colorSettingsPage implementation="org.gark87.intellij.lang.ini.IniColorsPage"/>
     </extensions>
 
 
     <actions>
         <!-- Add your actions here -->
     </actions>
-</idea-plugin>
+</idea-plugin>                                              

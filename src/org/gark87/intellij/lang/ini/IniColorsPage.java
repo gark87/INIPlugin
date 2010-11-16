@@ -21,7 +21,6 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
-import org.gark87.intellij.lang.ini.IniHighlighter;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -35,7 +34,8 @@ public class IniColorsPage implements ColorSettingsPage {
 
     static {
         ATTRS = new AttributesDescriptor[IniHighlighter.DISPLAY_NAMES.size()];
-        TextAttributesKey[] keys = IniHighlighter.DISPLAY_NAMES.keySet().toArray(new TextAttributesKey[0]);
+        TextAttributesKey[] keys = IniHighlighter.DISPLAY_NAMES.keySet().toArray(
+                new TextAttributesKey[IniHighlighter.DISPLAY_NAMES.keySet().size()]);
         for (int i = 0; i < keys.length; i++) {
             TextAttributesKey key = keys[i];
             String name = IniHighlighter.DISPLAY_NAMES.get(key).getFirst();
@@ -70,9 +70,9 @@ public class IniColorsPage implements ColorSettingsPage {
 
     @NotNull
     public String getDemoText() {
-        return "; Comment on keys and values\n"+
-                "[section1]\n"+
-                "key1  = value1;";
+        return "; Comment on keys and values\n" +
+                "[section1]\n" +
+                "key1  = value1 \"quoted string\"";
     }
 
     public Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
