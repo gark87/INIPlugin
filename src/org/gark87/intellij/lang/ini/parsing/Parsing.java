@@ -29,7 +29,7 @@ public class Parsing {
 
     public static PsiBuilder.Marker parseStmt(PsiBuilder builder, PsiBuilder.Marker sectionMarker) {
         IElementType tokenType = skipEOLs(builder);
-        if (tokenType == IniTokenTypes.SECTION)
+        if (tokenType == IniTokenTypes.LBRACKET)
             return parseSectionName(builder, sectionMarker);
         if (tokenType == IniTokenTypes.KEY_CHARACTERS) {
             parseProperty(builder);
@@ -42,8 +42,21 @@ public class Parsing {
     }
 
     private static PsiBuilder.Marker parseSectionName(PsiBuilder builder, PsiBuilder.Marker oldMarker) {
-        LOG.assertTrue(builder.getTokenType() == IniTokenTypes.SECTION);
+        LOG.assertTrue(builder.getTokenType() == IniTokenTypes.LBRACKET);
         builder.advanceLexer();
+        IElementType tokenType = builder.getTokenType();
+        boolean afterSeparator = false;
+        while (!builder.eof() && (tokenType == IniTokenTypes.SECTION_SEPARATOR || tokenType == IniTokenTypes.SECTION)) {
+            if (afterSeparator && (tokenType == IniTokenTypes.SECTION_SEPARATOR))
+                builder.error(IniBundle.message("parsing.ini.consecutive.separators"));
+            afterSeparator = (tokenType == IniTokenTypes.SECTION_SEPARATOR);
+            builder.advanceLexer();
+            tokenType = builder.getTokenType();
+        }
+        if (tokenType != IniTokenTypes.RBRACKET)
+            builder.error(IniBundle.message("parsing.ini.expect.bracket"));
+        if (tokenType != IniTokenTypes.EOL)   // no errors should be after EOL 
+            builder.advanceLexer();
         oldMarker.done(IniElementTypes.SECTION);
         lookupEOL(builder);
         return builder.mark();

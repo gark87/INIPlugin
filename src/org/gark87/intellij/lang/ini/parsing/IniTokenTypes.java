@@ -34,6 +34,9 @@ public interface IniTokenTypes {
     IElementType EOL = new IniElementType("EOL");
     IElementType SECTION = new IniElementType("SECTION");
     IElementType QUOTED_STRING = new IniElementType("QUOTED_STRING");
+    IElementType RBRACKET = new IniElementType("RBRACKET");
+    IElementType LBRACKET = new IniElementType("LBRACKET");
+    IElementType SECTION_SEPARATOR = new IniElementType("SECTION_SEPARATOR");
 
     TokenSet COMMENTS = TokenSet.create(END_OF_LINE_COMMENT);
     TokenSet STRINGS = TokenSet.create(IniTokenTypes.QUOTED_STRING);

@@ -57,6 +57,16 @@ public class IniHighlighter extends SyntaxHighlighterBase {
             SyntaxHighlighterColors.KEYWORD.getDefaultAttributes()
     );
 
+    public static final TextAttributesKey INI_BRACKETS = TextAttributesKey.createTextAttributesKey(
+            "INI.BRACES",
+            SyntaxHighlighterColors.KEYWORD.getDefaultAttributes()
+    );
+
+    public static final TextAttributesKey INI_SECTION_SEPARATOR = TextAttributesKey.createTextAttributesKey(
+            "INI.SECTION_SEPARATOR",
+            SyntaxHighlighterColors.KEYWORD.getDefaultAttributes()
+    );
+
     public static final TextAttributesKey INI_QUOTED_STRING = TextAttributesKey.createTextAttributesKey(
             "INI.QUOTED_STRING",
             SyntaxHighlighterColors.STRING.getDefaultAttributes()
@@ -81,6 +91,9 @@ public class IniHighlighter extends SyntaxHighlighterBase {
         keys1.put(IniTokenTypes.END_OF_LINE_COMMENT, INI_COMMENT);
         keys1.put(IniTokenTypes.KEY_CHARACTERS, INI_KEY);
         keys1.put(IniTokenTypes.SECTION, INI_SECTION);
+        keys1.put(IniTokenTypes.LBRACKET, INI_BRACKETS);
+        keys1.put(IniTokenTypes.RBRACKET, INI_BRACKETS);
+        keys1.put(IniTokenTypes.SECTION_SEPARATOR, INI_SECTION_SEPARATOR);
         keys1.put(IniTokenTypes.KEY_VALUE_SEPARATOR, INI_KEY_VALUE_SEPARATOR);
         keys1.put(IniTokenTypes.QUOTED_STRING, INI_QUOTED_STRING);
     }
@@ -95,9 +108,11 @@ public class IniHighlighter extends SyntaxHighlighterBase {
     static {
         DISPLAY_NAMES.put(INI_KEY, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.property.key"), null));
         DISPLAY_NAMES.put(INI_VALUE, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.property.value"), null));
-        DISPLAY_NAMES.put(INI_KEY_VALUE_SEPARATOR, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.key.value.separator"), null));
+        DISPLAY_NAMES.put(INI_KEY_VALUE_SEPARATOR, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.property.separator"), null));
         DISPLAY_NAMES.put(INI_COMMENT, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.comment"), null));
         DISPLAY_NAMES.put(INI_SECTION, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.section"), null));
+        DISPLAY_NAMES.put(INI_BRACKETS, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.section.brackets"), null));
+        DISPLAY_NAMES.put(INI_SECTION_SEPARATOR, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.section.separator"), null));
         DISPLAY_NAMES.put(INI_QUOTED_STRING, new Pair<String, HighlightSeverity>(IniBundle.message("options.ini.attribute.descriptor.quoted.string"), null));
     }
 }

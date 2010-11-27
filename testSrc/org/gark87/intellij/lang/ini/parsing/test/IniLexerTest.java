@@ -124,12 +124,12 @@ public class IniLexerTest extends com.intellij.testFramework.UsefulTestCase {
 
     @Test
     public void testIncompleteSection() throws Exception {
-        doTest("[", "BAD_CHARACTER", "[");
+        doTest("[", "Ini:LBRACKET", "[");
 
         doTest("[ a",
-                "BAD_CHARACTER", "[",
+                "Ini:LBRACKET", "[",
                 "WHITE_SPACE", " ",
-                "Ini:KEY_CHARACTERS", "a");
+                "Ini:SECTION", "a");
     }
 
     @Test
@@ -230,17 +230,23 @@ public class IniLexerTest extends com.intellij.testFramework.UsefulTestCase {
         doTest("  [section;test  ]",
 
                 "WHITE_SPACE", "  ",
-                "Ini:SECTION", "[section;test  ]");
+                "Ini:LBRACKET", "[",
+                "Ini:SECTION", "section",
+                "Ini:END_OF_LINE_COMMENT", ";test  ]");
 
         doTest("  [  ;test  ]",
 
                 "WHITE_SPACE", "  ",
-                "Ini:SECTION", "[  ;test  ]");
+                "Ini:LBRACKET", "[",
+                "WHITE_SPACE", "  ",
+                "Ini:END_OF_LINE_COMMENT", ";test  ]");
 
         doTest("  [section] ;comment",
 
                 "WHITE_SPACE", "  ",
-                "Ini:SECTION", "[section]",
+                "Ini:LBRACKET", "[",
+                "Ini:SECTION", "section",
+                "Ini:RBRACKET", "]",
                 "WHITE_SPACE", " ",
                 "Ini:END_OF_LINE_COMMENT", ";comment");
     }
@@ -267,17 +273,27 @@ public class IniLexerTest extends com.intellij.testFramework.UsefulTestCase {
     public void testSection() throws Exception {
         doTest("  [section]",
                 "WHITE_SPACE", "  ",
-                "Ini:SECTION", "[section]");
+                "Ini:LBRACKET", "[",
+                "Ini:SECTION", "section",
+                "Ini:RBRACKET", "]");
 
         doTest("  [[test  ]",
                 "WHITE_SPACE", "  ",
-                "Ini:SECTION", "[[test  ]");
+                "Ini:LBRACKET", "[",
+                "Ini:SECTION", "[test",
+                "WHITE_SPACE", "  ",
+                "Ini:RBRACKET", "]");
 
         doTest("[  a=b]",
-                "Ini:SECTION", "[  a=b]");
+                "Ini:LBRACKET", "[",
+                "WHITE_SPACE", "  ",
+                "Ini:SECTION", "a=b",
+                "Ini:RBRACKET", "]");
 
         doTest("[\"section\"]",
-                "Ini:SECTION", "[\"section\"]");
+                "Ini:LBRACKET", "[",
+                "Ini:SECTION", "\"section\"",
+                "Ini:RBRACKET", "]");
     }
 
     @Test
@@ -287,8 +303,11 @@ public class IniLexerTest extends com.intellij.testFramework.UsefulTestCase {
                 "phpSettings.display_errors = 0\n" +
                 "includePaths.library = APPLICATION_PATH \"/../library\"",
 
-
-                "Ini:SECTION", "[staging : production]",
+                "Ini:LBRACKET", "[",
+                "Ini:SECTION", "staging",
+                "Ini:SECTION_SEPARATOR", " : ",
+                "Ini:SECTION", "production",
+                "Ini:RBRACKET", "]",
                 "Ini:EOL", "\n",
                 "Ini:END_OF_LINE_COMMENT", "; PHP settings we want to initialize\n",
                 "Ini:KEY_CHARACTERS", "phpSettings.display_errors",

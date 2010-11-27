@@ -71,7 +71,7 @@ public class IniColorsPage implements ColorSettingsPage {
     @NotNull
     public String getDemoText() {
         return "; Comment on keys and values\n" +
-                "[section1]\n" +
+                "[section : subsection ]\n" +
                 "key1  = value1 \"quoted string\"";
     }
 
