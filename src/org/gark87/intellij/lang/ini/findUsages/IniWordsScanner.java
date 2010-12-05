@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package org.gark87.intellij.lang.ini.parsing;
+package org.gark87.intellij.lang.ini.findUsages;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.IStubFileElementType;
-import org.gark87.intellij.lang.ini.IniLanguage;
+import com.intellij.lang.cacheBuilder.DefaultWordsScanner;
+import org.gark87.intellij.lang.ini.parsing.IniLexer;
+import org.gark87.intellij.lang.ini.parsing.IniTokenTypes;
 
 /**
  * @author gark87 <arkady.galyash@gmail.com>
  */
-public interface IniElementTypes {
-    IniLanguage LANG = Language.findInstance(IniLanguage.class);
-
-    IFileElementType FILE = new IStubFileElementType(LANG);
-    IElementType PROPERTY = new IniElementType("<PROPERTY>");
-    IElementType SECTION = new IniElementType("<SECTION>");
+public class IniWordsScanner extends DefaultWordsScanner {
+    public IniWordsScanner() {
+        super(new IniLexer(), IniTokenTypes.SECTIONS, IniTokenTypes.COMMENTS, IniTokenTypes.STRINGS);
+    }
 }

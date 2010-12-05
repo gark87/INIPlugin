@@ -25,9 +25,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
+import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
 import com.intellij.psi.tree.TokenSet;
-import org.gark87.intellij.lang.ini.psi.impl.IniFileImpl;
+import org.gark87.intellij.lang.ini.psi.IniFile;
+import org.gark87.intellij.lang.ini.psi.Section;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -64,11 +66,14 @@ public class IniParserDefinition implements ParserDefinition {
 
     @NotNull
     public PsiElement createElement(ASTNode node) {
+        final IElementType type = node.getElementType();     
+        if (type == IniElementTypes.SECTION)
+            return new Section(node);
         return new ASTWrapperPsiElement(node);
     }
 
     public PsiFile createFile(FileViewProvider viewProvider) {
-        return new IniFileImpl(viewProvider);
+        return new IniFile(viewProvider);
     }
 
     public SpaceRequirements spaceExistanceTypeBetweenTokens(ASTNode left, ASTNode right) {

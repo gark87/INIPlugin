@@ -14,21 +14,31 @@
  * limitations under the License.
  */
 
-package org.gark87.intellij.lang.ini.parsing;
+package org.gark87.intellij.lang.ini.psi;
 
-import com.intellij.lang.Language;
+import com.intellij.lang.ASTFactory;
+import com.intellij.psi.impl.source.tree.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.IStubFileElementType;
-import org.gark87.intellij.lang.ini.IniLanguage;
+import org.gark87.intellij.lang.ini.parsing.IniTokenTypes;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * @author gark87 <arkady.galyash@gmail.com>
  */
-public interface IniElementTypes {
-    IniLanguage LANG = Language.findInstance(IniLanguage.class);
+public class IniASTFactory extends ASTFactory {
+    @Nullable
+    public CompositeElement createComposite(final IElementType type) {
+        if (type instanceof IFileElementType)
+            return new FileElement(type, null);
+        return new CompositeElement(type);
+    }
 
-    IFileElementType FILE = new IStubFileElementType(LANG);
-    IElementType PROPERTY = new IniElementType("<PROPERTY>");
-    IElementType SECTION = new IniElementType("<SECTION>");
+    @Nullable
+    public LeafElement createLeaf(final IElementType type, CharSequence text) {
+        if (type == IniTokenTypes.SECTION)
+            return new SectionImpl(type, text);
+        return new LeafPsiElement(type, text);
+    }
 }
+

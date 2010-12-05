@@ -14,26 +14,34 @@
  * limitations under the License.
  */
 
-package org.gark87.intellij.lang.ini.psi.impl;
+package org.gark87.intellij.lang.ini.psi;
 
-import com.intellij.extapi.psi.PsiFileBase;
-import com.intellij.openapi.fileTypes.FileType;
-import com.intellij.psi.FileViewProvider;
-import org.gark87.intellij.lang.ini.IniSupportLoader;
-import org.gark87.intellij.lang.ini.parsing.IniElementTypes;
-import org.gark87.intellij.lang.ini.psi.IniFile;
+import com.intellij.psi.PsiReferenceBase;
+import com.intellij.psi.util.PsiTreeUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * @author gark87 <arkady.galyash@gmail.com>
  */
-public class IniFileImpl extends PsiFileBase implements IniFile {
-    public IniFileImpl(FileViewProvider viewProvider) {
-        super(viewProvider, IniElementTypes.LANG);
+public class SectionPsiReference extends PsiReferenceBase<SectionImpl> {
+    public SectionPsiReference(@NotNull SectionImpl element) {
+        super(element);
+        psiElement = element;
+    }
+
+    private SectionImpl psiElement;
+
+    public SectionImpl resolve() {
+        IniSectionProcessor processor = new IniSectionProcessor(psiElement);
+        boolean result = PsiTreeUtil.processElements(psiElement.getContainingFile(), processor);
+        if (!result)
+            return processor.getResult();
+        return null;
     }
 
     @NotNull
-    public FileType getFileType() {
-        return IniSupportLoader.INI;
+    public Object[] getVariants() {
+        return new Object[0];
     }
 }
+

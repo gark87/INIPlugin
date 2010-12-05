@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-package org.gark87.intellij.lang.ini.parsing;
+package org.gark87.intellij.lang.ini.psi;
 
+import com.intellij.extapi.psi.StubBasedPsiElementBase;
+import com.intellij.lang.ASTNode;
 import com.intellij.lang.Language;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.IStubFileElementType;
-import org.gark87.intellij.lang.ini.IniLanguage;
+import com.intellij.psi.stubs.IStubElementType;
+import com.intellij.psi.stubs.StubElement;
+import org.gark87.intellij.lang.ini.parsing.IniElementTypes;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * @author gark87 <arkady.galyash@gmail.com>
  */
-public interface IniElementTypes {
-    IniLanguage LANG = Language.findInstance(IniLanguage.class);
+public class IniStubElement<T extends StubElement> extends StubBasedPsiElementBase<T> {
+    public IniStubElement(@org.jetbrains.annotations.NotNull ASTNode node) {
+        super(node);
+    }
 
-    IFileElementType FILE = new IStubFileElementType(LANG);
-    IElementType PROPERTY = new IniElementType("<PROPERTY>");
-    IElementType SECTION = new IniElementType("<SECTION>");
+    @NotNull
+    @Override
+    public Language getLanguage() {
+        return IniElementTypes.LANG;
+    }
 }

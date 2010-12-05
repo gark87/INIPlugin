@@ -41,4 +41,6 @@ public interface IniTokenTypes {
     TokenSet COMMENTS = TokenSet.create(END_OF_LINE_COMMENT);
     TokenSet STRINGS = TokenSet.create(IniTokenTypes.QUOTED_STRING);
     TokenSet WHITESPACES = TokenSet.create(WHITE_SPACE);
+    TokenSet SECTIONS = TokenSet.create(IniTokenTypes.SECTION);
+
 }

@@ -17,6 +17,13 @@
         <lang.parserDefinition language="INI"
                                implementationClass="org.gark87.intellij.lang.ini.parsing.IniParserDefinition"/>
         <colorSettingsPage implementation="org.gark87.intellij.lang.ini.IniColorsPage"/>
+        <lang.ast.factory language="INI" implementationClass="org.gark87.intellij.lang.ini.psi.IniASTFactory"/>
+        <lang.elementManipulator forClass="org.gark87.intellij.lang.ini.psi.SectionImpl"
+                                 implementationClass="org.gark87.intellij.lang.ini.SectionManipulator"/>
+        <lang.findUsagesProvider language="INI"
+                                 implementationClass="org.gark87.intellij.lang.ini.findUsages.IniFindUsagesProvider"/>
+
+
     </extensions>
 
 

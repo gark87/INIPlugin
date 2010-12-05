@@ -35,8 +35,8 @@ COMMENT=[;#][^\r\n]* ({CRLF} [\ \t\f]*)?
 KEY_SEPARATOR=[\ \t]*[:=][\ \t]*
 KEY_CHARACTER=[^:=\[\]#;\ \n\r\t\f\\] | "\\"{CRLF} | "\\".
 VALUE_CHARACTER=[^#;\"\n\r\f\\] | "\\"{CRLF} | "\\".
-SECTION_CHARACTER=[^ \t\f\]:\\.;#\r\n]
-SECTION_SEPARATOR=[\ \t]*[:\\.][\ \ t]*
+SECTION_CHARACTER=[^ \t\f\]:;#\r\n]
+SECTION_SEPARATOR=[\ \t]*":"[\ \t]*
 LBRACKET="["
 RBRACKET="]"
 

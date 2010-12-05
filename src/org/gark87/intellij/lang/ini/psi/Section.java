@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-package org.gark87.intellij.lang.ini.parsing;
+package org.gark87.intellij.lang.ini.psi;
 
-import com.intellij.lang.Language;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.IFileElementType;
-import com.intellij.psi.tree.IStubFileElementType;
-import org.gark87.intellij.lang.ini.IniLanguage;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.util.PsiTreeUtil;
+import org.jetbrains.annotations.NonNls;
 
 /**
  * @author gark87 <arkady.galyash@gmail.com>
  */
-public interface IniElementTypes {
-    IniLanguage LANG = Language.findInstance(IniLanguage.class);
+public class Section extends IniStubElement {
 
-    IFileElementType FILE = new IStubFileElementType(LANG);
-    IElementType PROPERTY = new IniElementType("<PROPERTY>");
-    IElementType SECTION = new IniElementType("<SECTION>");
+    public Section(ASTNode node) {
+        super(node);
+    }
+
+    @NonNls
+    public String toString() {
+        return "Section: " + getText();
+    }
+
+    public SectionImpl[] getSubSections() {
+        return PsiTreeUtil.getChildrenOfType(this, SectionImpl.class);
+    }
 }
